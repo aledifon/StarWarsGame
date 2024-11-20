@@ -12,35 +12,46 @@ public class Xwing : MonoBehaviour
     [Header("Movement")]
     [SerializeField]
     private int speed;
+    private int moveSpeed;
     [SerializeField]
     private int turnSpeed;
     [SerializeField]
     private int speedBoost = 10;
-
     private float horizontal,
                     vertical,
                     xMouse,
                     yMouse;
 
-    private Rigidbody rb;
-    private int moveSpeed;
+    [Header("Attack")]
+    [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
+    private Transform[] posRotBullet;            
 
+    private Rigidbody rb;
+    private AudioSource shootAudio;
+   
     private void Awake()
     {
         // Configure globally the invariant culture (In order to use '.' as floating point)
         System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        moveSpeed = speed;
+        shootAudio = GetComponent<AudioSource>();
+
+        moveSpeed = speed;      // Init the Movement Speed with the Def. Speed
     }
     
     void Update()
     {
         InputPlayer();
+        Attack();
         //Spin();
         Movement();
         Turning();
@@ -49,6 +60,7 @@ public class Xwing : MonoBehaviour
     private void FixedUpdate()
     {
         //InputPlayer();
+        //Attack();
         //Spin();
         //MovementPhysics();
         //Turning();
@@ -93,5 +105,22 @@ public class Xwing : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);         // Wait for a delay        
         moveSpeed = speed;                              // Set again the default Movement Speed
+    }
+
+    // Create the bullets to attack the enemies
+    void Attack()
+    {        
+        if (Input.GetMouseButtonDown(0))
+        {
+            
+            shootAudio.Play();
+
+            foreach (Transform bullet in posRotBullet)
+            {
+                GameObject cloneBullet = Instantiate(bulletPrefab, bullet.position, bullet.rotation);
+                // Destroyes the bullet after 5s
+                Destroy(cloneBullet, 3);                                
+            }
+        }
     }
 }
