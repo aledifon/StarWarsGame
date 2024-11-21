@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/CanvasScene.unity
     guid: 16f8c989c126025429fb74474eae74b9
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/Level01.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

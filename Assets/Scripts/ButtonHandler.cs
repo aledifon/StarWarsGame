@@ -71,6 +71,6 @@ public class ButtonHandler : MonoBehaviour
 
     private void LoadGameScene()
     {
-        SceneManager.LoadScene("GameScene");  // Cambia "GameScene" por el nombre de tu escena de juego
+        SceneManager.LoadScene("Level01");  // Cambia "GameScene" por el nombre de tu escena de juego
     }
 }
